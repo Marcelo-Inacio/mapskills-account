@@ -1,12 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
+	<name>Mapskills - Account</name>
 	<groupId>br.gov.sp.fatec</groupId>
 	<artifactId>account</artifactId>
 	<version>1.1.0</version>
-	<name>Mapskills - Account</name>
+	<packaging>jar</packaging>
 	<description>Serviço para realização de autenticação de usuários que utilizam a aplicação Mapskills</description>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.8.RELEASE</version>
+	</parent>
+	
 	<developers>
 		<developer>
 			<name>Marcelo Inacio</name>
@@ -30,12 +38,6 @@
 		<datasource.username>mapskills</datasource.username>
 		<datasource.password>mapskills</datasource.password>
 	</properties>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
-	</parent>
 
 	<dependencies>
 		<dependency>
