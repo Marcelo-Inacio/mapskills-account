@@ -138,21 +138,21 @@
 			<id>local</id>
 			<properties>
 				<spring.profiles.active>local</spring.profiles.active>
-				<datasource.url>jdbc:mysql://127.0.0.1:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://127.0.0.1:3306/MAPSKILLS</datasource.url>
 			</properties>
 		</profile>
 		<profile>
 			<id>azure-prd</id>
 			<properties>
 				<spring.profiles.active>azure-prd</spring.profiles.active>
-				<datasource.url>jdbc:mysql://191.232.161.50:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://191.232.161.50:3306/MAPSKILLS</datasource.url>
 			</properties>
 		</profile>
 		<profile>
 			<id>azure-qas</id>
 			<properties>
 				<spring.profiles.active>azure-qas</spring.profiles.active>
-				<datasource.url>jdbc:mysql://104.41.26.21:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://104.41.26.21:3306/MAPSKILLS</datasource.url>
 			</properties>
 		</profile>
 	</profiles>
