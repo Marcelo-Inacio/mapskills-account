@@ -42,7 +42,7 @@ public class AuthenticationEvent extends AuthenticationSuccessEvent {
         return getAuthentication().getPrincipal();
     }
 
-    private Principal getUser() {
+    public Principal getUser() {
         return getAuthentication().getPrincipal();
     }  
 }

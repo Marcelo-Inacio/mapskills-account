@@ -35,7 +35,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import br.gov.sp.fatec.mapskills.account.authentication.AuthenticationListener;
 
 /**
- * A classe {@link SecurityConfig}
+ * A classe {@link SecurityConfig} contém as configurações base de
+ * segurança da aplicação.
  *
  * @author Marcelo
  * @version 1.0 11/01/2018
@@ -101,14 +102,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * Lista de todos os listeners de sucesso ao realizar login.
 	 * 
-	 * @param responseHeaderListener
-	 * 		Listener de escrita do JWT no header da response.
+	 * @param responseCookieAuthenticationListener
+	 * 		Listener de escrita do JWT no cookie da response.
+	 * @param responseWriterAuthenticationListener
+	 * 		Listener de escrita do json que representa o usuario.
 	 * @return
 	 * 		A lista de listeners.
 	 */
 	@Bean
     public List<AuthenticationListener> authenticationListeners(
-            @Qualifier("responseHeaderAuthenticationListener") final AuthenticationListener responseHeaderListener) {
-        return Arrays.asList(responseHeaderListener);
+            @Qualifier("responseCookieAuthenticationListener") final AuthenticationListener responseCookieAuthenticationListener,
+            @Qualifier("responseWriterAuthenticationListener") final AuthenticationListener responseWriterAuthenticationListener) {
+        return Arrays.asList(responseCookieAuthenticationListener, responseWriterAuthenticationListener);
     }
 }

@@ -11,7 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * A classe {@link AccountApplication}
+ * A classe {@link AccountApplication} realiza o start
+ * da aplicação.
  *
  * @author Marcelo
  * @version 1.0 11/01/2018

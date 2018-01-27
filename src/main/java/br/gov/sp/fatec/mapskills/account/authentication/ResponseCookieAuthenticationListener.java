@@ -4,6 +4,7 @@
  * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
  * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
+
 package br.gov.sp.fatec.mapskills.account.authentication;
 
 import java.io.IOException;
@@ -30,8 +31,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
 /**
- * 
- * A classe {@link ResponseHeaderAuthenticationListener} e
+ * A classe {@link ResponseCookieAuthenticationListener} e
  * reponsavel por gerar o token JWT, e gravar no header da
  * resposta o token que dara ao cliente autorizacao aos
  * servicos fornecidos pela aplicacao.
@@ -40,30 +40,22 @@ import com.nimbusds.jwt.SignedJWT;
  * @version 1.0 27/01/2017
  */
 @Component
-public class ResponseHeaderAuthenticationListener implements AuthenticationListener {
+public class ResponseCookieAuthenticationListener implements AuthenticationListener {
 	
-	private static Logger logger = Logger.getLogger(ResponseHeaderAuthenticationListener.class.getName());
+	private static Logger logger = Logger.getLogger(ResponseCookieAuthenticationListener.class.getName());
 	private static final long FIVE_HOURS_IN_MILLISECONDS = 60000L * 300L;
     private final JWSSigner signer;
     
     @Autowired
-    public ResponseHeaderAuthenticationListener(@Value("${jwt.secret}") final String secret) throws JOSEException {
+    public ResponseCookieAuthenticationListener(@Value("${jwt.secret}") final String secret) throws JOSEException {
         super();
         this.signer = new MACSigner(secret);
     }
 
+    /** {@inheritDoc} */
 	@Override
 	public void onAuthenticationSuccess(final AuthenticationEvent event) throws IOException, ServletException {
-		final long now = System.currentTimeMillis();
-		final JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-				.subject(event.getUsername())
-				.claim("username", event.getUserDomain().getUsername())
-				.claim("profile", event.getUserDomain().getProfile())
-				.issueTime(new Date(now))
-				.issuer("https://mapskills.fatec.sp.gov.br")
-				.expirationTime(new Date(now + FIVE_HOURS_IN_MILLISECONDS))
-				.notBeforeTime(new Date(now))
-				.build();
+		final JWTClaimsSet claimsSet = buildJWT(event);
 
         final SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
 
@@ -74,11 +66,23 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
             throw new AuthenticationServiceException("The given JWT could not be signed.");
         }
 
-        final HttpServletResponse resp = event.getResponse();
+        final HttpServletResponse response = event.getResponse();
         final String bearer = String.format("Bearer %s", signedJWT.serialize());
-        resp.setHeader("Authorization", bearer);
         final Cookie cookie = new Cookie("Authorization", URLEncoder.encode(bearer, "UTF-8"));
         cookie.setHttpOnly(true);
-        resp.addCookie(cookie);
+        response.addCookie(cookie);
+	}
+	
+	private JWTClaimsSet buildJWT(final AuthenticationEvent event) {
+		final long now = System.currentTimeMillis();
+		return new JWTClaimsSet.Builder()
+				.subject(event.getUsername())
+				.claim("username", event.getUserDomain().getUsername())
+				.claim("profile", event.getUserDomain().getProfile())
+				.issueTime(new Date(now))
+				.issuer("https://mapskills.fatec.sp.gov.br")
+				.expirationTime(new Date(now + FIVE_HOURS_IN_MILLISECONDS))
+				.notBeforeTime(new Date(now))
+				.build();
 	}
 }

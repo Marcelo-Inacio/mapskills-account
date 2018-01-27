@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.gov.sp.fatec</groupId>
 	<artifactId>account</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<name>Mapskills - Account</name>
 	<description>Serviço para realização de autenticação de usuários que utilizam a aplicação Mapskills</description>
 
