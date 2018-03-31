@@ -20,7 +20,6 @@ import br.gov.sp.fatec.mapskills.account.user.Student;
 import lombok.AllArgsConstructor;
 
 /**
- * 
  * A classe {@link StudentSerializer} e responsavel
  * por serializar o perfil de aluno com suas respectivas
  * informacoes.

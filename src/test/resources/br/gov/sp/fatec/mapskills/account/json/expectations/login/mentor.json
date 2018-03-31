@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "name": "Rafael Henry Alves",
+  "profile": "MENTOR",
+  "username": "rafael.alves@fatec.sp.gov.br",
+  "institution": {
+    "id": 1,
+    "code": "146",
+    "cnpj": 65090609000144,
+    "company": "Jessen Vidal",
+    "level": "SUPERIOR",
+    "city": "São José dos Campos - SP"
+  }
+}

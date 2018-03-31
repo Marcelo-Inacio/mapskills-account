@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("providerManager")
     private AuthenticationManager providerManager;
 	
-	
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.addFilterBefore(corsFilter(), AbstractPreAuthenticatedProcessingFilter.class).csrf().disable();

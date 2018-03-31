@@ -4,10 +4,10 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
  * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
+
 package br.gov.sp.fatec.mapskills.account.user;
 
 /**
- * 
  * A classe {@link ProfileType} representa os tipos de perfis
  * que podem ser assumidos pelos usuarios da aplicacao.
  *
@@ -17,8 +17,4 @@ package br.gov.sp.fatec.mapskills.account.user;
 public enum ProfileType {
 	
 	ADMINISTRATOR, MENTOR, STUDENT;
-		
-	public boolean isAdmin() {
-		return this.equals(ADMINISTRATOR);
-	}
 }

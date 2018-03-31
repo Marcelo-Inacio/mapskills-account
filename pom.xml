@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>1.5.10.RELEASE</version>
 	</parent>
 
 	<developers>
@@ -39,6 +39,30 @@
 		<datasource.password>mapskills</datasource.password>
 
 		<docker.image.prefix>mapskills</docker.image.prefix>
+
+		<!-- SONAR -->
+		<!-- COMANDOS PARA RODAR SONAR -->
+		<!-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true -->
+		<!-- mvn cobertura:cobertura -->
+		<!-- mvn sonar:sonar -->
+		<sonar.language>java</sonar.language>
+		<sonar.projectName>Map Skills - Account</sonar.projectName>
+		<sonar.junit.reportsPath>/target/surefire-reports</sonar.junit.reportsPath>
+		<sonar.language>java</sonar.language>
+		<!-- Optional URL to server. Default value is http://localhost:9000 -->
+		<sonar.host.url>http://104.41.26.21:9000</sonar.host.url>
+		<sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+		<sonar.exclusions>
+			src/main/java/br/gov/sp/fatec/mapskills/account/AccountApplication.java,
+			src/main/java/br/gov/sp/fatec/mapskills/account/config/**/*,
+			src/test/*
+		</sonar.exclusions>
+		<sonar.coverage.exclusions>
+			src/main/java/br/gov/sp/fatec/mapskills/account/AccountApplication.java,
+			src/main/java/br/gov/sp/fatec/mapskills/account/config/**/*,
+			src/test/*
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -60,6 +84,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-data</artifactId>
 		</dependency>
 
 		<!-- JWT -->
@@ -106,13 +134,34 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
+			<version>2.5.1</version>
 			<scope>test</scope>
 		</dependency>
+				
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.5.2</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>stax</groupId>
+					<artifactId>stax-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.minidev</groupId>
+		    <artifactId>json-smart</artifactId>
+		    <version>2.2.1</version>
+		</dependency>
+
 		<!-- JSON Assert -->
 		<dependency>
 			<groupId>org.skyscreamer</groupId>
@@ -124,6 +173,19 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<!-- SERVLET -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
 		</dependency>
 
 		<!-- LOMBOK -->
@@ -181,5 +243,56 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<reporting>
+		<excludeDefaults>true</excludeDefaults>
+		<outputDirectory>${project.build.directory}/site</outputDirectory>
+		<plugins>
+			<!-- Configures the projects-info-reports plugin. Why: Reduce the time 
+				consumed considerably by removing the need to acquire dependency details 
+				and locations. Used: Site lifecycle, mvn site. -->
+			<!-- Executar o plugin com mvn cobertura:cobertura -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
+				<configuration>
+					<dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+				</configuration>
+			</plugin>
+			<!-- integrate maven-cobertura-plugin to project site -->
+			<plugin>
+				<groupId>net.sourceforge.cobertura</groupId>
+				<artifactId>cobertura</artifactId>
+				<version>${cobertura.version}</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+					</formats>
+					<instrumentation>
+						<ignores>
+							<ignore>br.gov.sp.fatec.mapskills.account.config.*</ignore>
+						</ignores>
+						<excludes>
+							<exclude>br/gov/sp/fatec/mapskills/account/AccountApplication.class</exclude>
+							<exclude>br/gov/sp/fatec/mapskills/account/config/DatabaseConfig.class</exclude>
+							<exclude>br/gov/sp/fatec/mapskills/account/config/*.class</exclude>
+							<exclude>**/test/*.class</exclude>
+						</excludes>
+					</instrumentation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

@@ -33,8 +33,4 @@ public class DefaultGrantedAuthority implements GrantedAuthority {
 	public String getAuthority() {
 		return "ROLE_" + role.name();
 	}
-	
-	public boolean isAdmin() {
-        return role.isAdmin();
-    }
 }

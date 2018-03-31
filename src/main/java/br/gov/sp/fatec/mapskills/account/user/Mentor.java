@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 
@@ -25,8 +24,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "MAPSKILLS.MENTOR")
 public class Mentor extends User {
-	
-	@Setter
+
 	@ManyToOne
 	@JoinColumn(name = "ID_INSTITUTION")
 	private Institution institution;
@@ -38,14 +36,6 @@ public class Mentor extends User {
 	
 	public Mentor(final String name, final String username, final String password) {
 		super(name, new Login(username, password));
-	}
-	
-	public Long getInstitutionId() {
-		return institution.getId();
-	}
-	
-	public String getInstitutionCode() {
-		return institution.getCode();
 	}
 
 	@Override

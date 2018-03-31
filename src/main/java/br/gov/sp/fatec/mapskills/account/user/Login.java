@@ -47,9 +47,4 @@ public class Login {
 		this.username = username;
 		this.password = password;
 	}
-	
-	public void update(final Login newLogin) {
-		username = newLogin.getUsername();
-		password = newLogin.getPassword();
-	}	
 }

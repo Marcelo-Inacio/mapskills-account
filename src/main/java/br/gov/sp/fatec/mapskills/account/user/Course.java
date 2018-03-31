@@ -42,7 +42,7 @@ public class Course {
 	private final String name;
 	
 	@Enumerated
-	@Column(name = "PERIOD")
+	@Column(name = "_PERIOD")
 	private final Period period;
 	
 	@ManyToOne

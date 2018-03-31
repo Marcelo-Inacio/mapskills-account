@@ -46,16 +46,8 @@ public class Student extends User {
 		return ra.getFullRa();
 	}
 	
-	public AcademicRegistry getAcademicRegistry() {
-		return ra;
-	}
-	
 	public String getCourseCode() {
 		return ra.getCourseCode();
-	}
-	
-	public String getInstitutionCode() {
-		return ra.getInstitutionCode();
 	}
 	
 	public Institution getInstitution() {
